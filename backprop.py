@@ -6,4 +6,5 @@ def main():
     c = 0
     for index in range(1, len(sys.argv)):
         inp[c] = sys.argv[index]
-        print(type(inp[c]))
+        print("Hello ",inp[c])
+        c+=1
