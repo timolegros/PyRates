@@ -7,8 +7,8 @@ class UserSignUpForm(forms.ModelForm):
         model = UserProfileModel
         fields = ['username', 'progChoice', 'dbChoice', 'locChoice', 'interestChoice']
 
-# class SelectionForm(forms.Form):
-#     class Meta:
-#         model =
-#         fields =
+
+class SelectionForm(forms.Form):
+    bool = (('1', 'Yes'), ('0', 'No'))
+    YesNo = forms.BooleanField(required=False)
 
