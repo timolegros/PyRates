@@ -1,5 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import UserSignUpForm
 
 
-def home(request):
-    return render(request, 'main/home.html')
+def Home(request):
+    form = UserSignUpForm()
+    if request.method == 'POST':
+        form = UserSignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(Filter)
+    context = {'form': form}
+    return render(request, 'main/home.html', context)
+
+
+def Filter(request):
+    return render(request, 'main/filter.html')
