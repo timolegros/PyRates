@@ -19,8 +19,8 @@ def load_obj(name ):
         return pickle.load(f)
 
 def load_data():
-    conn = sqlite3.connect('procolson.db')
-    data = conn.execute("SELECT * FROM info")
+    conn = sqlite3.connect('db.sqlite3')
+    data = conn.execute("SELECT * FROM UserProfiles")
     return data
 
 def parse(string):
@@ -47,6 +47,15 @@ def catnhack(ha):
             hcat = "10"
     return hcat
 
+def update_val():
+    conn = sqlite3.connect('db.sqlite3')
+    sql = '''UPDATE UserProfiles
+             SET latest = 0,
+             WHERE latest =1'''
+    cur = conn.cursor()
+    cur.execute(sql, 'UserProfiles')
+    conn.commit()
+
 def first_it():
     location = ["East Coast", "Midwest", "West Coast", "Southern US", "Northern US", "Eastern Canada", "Western Canada", "Atlantic Provinces", "Outside US/ Canada"]
     proglang = ["C", "Python", "Javascript", "Java", "C#", "C", "C++"]
@@ -70,6 +79,10 @@ def first_it():
         for j in range(i+1, len(temp)):
             tmp1 = tuple(temp[i])
             tmp2 = tuple(temp[j])
+            if tmp1 <= tmp2:
+                c = tmp1
+                tmp1 = tmp2
+                tmp2 = c
             pdict[tuple([tmp1,tmp2])] = State([tmp1[0],tmp2[0]],[tmp1[1],tmp2[1]],[tmp1[2],tmp2[2]],[tmp1[3],tmp2[3]],[tmp1[4],tmp2[4]])
     save_obj(pdict, 'policy')
 
@@ -78,26 +91,30 @@ if __name__ == "__main__":
     if not my_file.is_file():
         first_it()
     pdict = load_obj('policy')
-    ###take in input and save to database###       
     data = load_data()
-    inp = []
-
     for rows in data:
-        hk = catnhack(rows[5])
-        pl = parse(rows[2])
-        db = parse(rows[3])
-        aoi = parse(rows(4))
-        tmp1 = [rows[1], pl, db, aoi, hk]
-        if pdict[tuple([inp, tmp1])].predict():
-            outlist.append(tmp1)
-
-    ##push output
+        if rows[7] == 1:
+            hk = catnhack(rows[3])
+            pl = parse(rows[4])
+            db = parse(rows[5])
+            aoi = parse(rows(6))
+            inp = [rows[2], pl, db, aoi, hk]           
     outlist = []
-    ##take in res
-    res = []
-    for index in range(len(outlist)):
-        pdict[tuple([outlist[index], tmp1])].backprop(res[index])
-    save_obj(pdict, 'policy')
+    for row in data:
+        hk = catnhack(row[3])
+        pl = parse(row[4])
+        db = parse(row[5])
+        aoi = parse(row(6))
+        tmp1 = [row[2], pl, db, aoi, hk]
+        if inp <= tmp1:
+                c = inp
+                inp = tmp1 
+                inp = c 
+        if pdict[tuple([inp, tmp1])].predict():
+            outlist.append(row)
+    update_val()
+    
+
 
 
     

@@ -8,10 +8,22 @@ class State:
         self.policy = [-1 , 0]
     
     def __eq__(self, other):
-        if lcmp(self.Location,other.Location) == -1 and lcmp(self.ProgLang,other.ProgLang) == 0 and lcmp(self.Database, other.Database) == 0 and lcmp(self.Interests,other.Interests) == 0 and lcmp(self.NHack,other.NHack) == 0:
+        if lcmp(self.Location,other.Location) == 0 and lcmp(self.ProgLang,other.ProgLang) == 0 and lcmp(self.Database, other.Database) == 0 and lcmp(self.Interests,other.Interests) == 0 and lcmp(self.NHack,other.NHack) == 0:
             return 0
         else:
             return -1
+
+    def __gt__(self, other):
+        return self.Location > other.Location
+
+    def __lt__(self, other):
+        return self.Location < other.Location
+
+    def __le__(self, other):
+        return self.Location <= other.Location
+
+    def __ge__(self, other):
+        return self.Location >= other.Location
 
     def backprop(self, res):
         self.policy[0] += 1
