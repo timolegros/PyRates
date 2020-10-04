@@ -1,7 +1,7 @@
 import sqlite3
 import pickle
 from pathlib import Path
-from copy import *
+import copy
 
 class State:
     def __init__(self, Location, ProgLang, Database, Interests, NHack):
@@ -61,10 +61,10 @@ def parse(string):
     x = []
     for ch in string:    
         if ch == ';':
-            ans.append(copy(x))
+            ans.append(copy.copy(x))
             x = []
         x += ch
-    ans.append(copy(x))
+    ans.append(copy.copy(x))
     return ans
 
 def catnhack(ha):
@@ -78,6 +78,7 @@ def catnhack(ha):
             hcat = "6-10"
     else:
             hcat = "10"
+    return hcat
 
 def first_it():
     location = ["East Coast", "Midwest", "West Coast", "Southern US", "Northern US", "Eastern Canada", "Western Canada", "Atlantic Provinces", "Outside US/ Canada"]

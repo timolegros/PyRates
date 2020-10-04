@@ -1,5 +1,5 @@
 # PyRates
-1. Monte Carlo Gradient
+1. Monte Carlo
 2. Very simple front end
 3. Make some dumyy profiles:
     a. location (East Coast, Midwest, West Coast, Southern US, Northern US, Eastern Canada Weastern Canada, Atlantic Provinces, Outside US/ Canada)
