@@ -1,6 +1,7 @@
 import sqlite3
 import pickle
 from pathlib import Path
+import copy
 
 class State:
     def __init__(self, Location, ProgLang, Database, Interests, NHack):
@@ -55,6 +56,30 @@ def load_data():
     data = conn.execute("SELECT * FROM info")
     return data
 
+def parse(string):
+    ans = []
+    x = []
+    for ch in string:    
+        if ch == ';':
+            ans.append(copy.copy(x))
+            x = []
+        x += ch
+    ans.append(copy.copy(x))
+    return ans
+
+def catnhack(ha):
+    if ha == 0:
+            hcat = "0"
+    elif ha >= 1 and ha <= 3:
+            hcat = "1-3"
+    elif ha >= 4 and ha <= 6:
+            hcat = "4-6"
+    elif ha >= 6 and ha <= 10:
+            hcat = "6-10"
+    else:
+            hcat = "10"
+    return hcat
+
 def first_it():
     location = ["East Coast", "Midwest", "West Coast", "Southern US", "Northern US", "Eastern Canada", "Western Canada", "Atlantic Provinces", "Outside US/ Canada"]
     proglang = ["C", "Python", "Javascript", "Java", "C#", "C", "C++"]
@@ -88,13 +113,19 @@ if __name__ == "__main__":
     pdict = load_obj('policy')
     ###take in input and save to database###       
     data = load_data()
-    outlist = []
     inp = []
+
     for rows in data:
-        tmp1 = [rows[1], rows[2], rows[3], rows[4], rows[5]]
+        hk = catnhack(rows[5])
+        pl = parse(rows[2])
+        db = parse(rows[3])
+        aoi = parse(rows(4))
+        tmp1 = [rows[1], pl, db, aoi, hk]
         if pdict[tuple([inp, tmp1])].predict():
             outlist.append(tmp1)
+
     ##push output
+    outlist = []
     ##take in res
     res = []
     for index in range(len(outlist)):
