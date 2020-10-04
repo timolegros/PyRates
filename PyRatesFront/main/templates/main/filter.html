@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Filter</title>
-</head>
-<body>
+{% extends 'main.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block content %}
+<div class="select2-container">
+    <div class="d-flex justify-content-center">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-success">
+        </form>
+    </div>
+</div>
+{% endblock %}
