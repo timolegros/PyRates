@@ -28,4 +28,4 @@ class UserSignUpForm(forms.Form):
 class SelectionForm(forms.Form):
     # how to make yes or now without submit button
     bool = (('1', 'Yes'), ('0', 'No'))
-    YesNo = forms.ChoiceField(label='Match?', choices=bool, required=True)
+    Answer = forms.ChoiceField(label='Match?', choices=bool, required=True)

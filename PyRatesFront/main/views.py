@@ -15,21 +15,24 @@ def Home(request):
             obj.progLanguages = '; '.join(form.cleaned_data['progLanguage'])
             obj.interests = '; '.join(form.cleaned_data['interests'])
             obj.save()
-            return redirect(Filter)
+            return redirect(Filter, kwargs=obj.userID)
     else:
         form = UserSignUpForm()
         context = {'form': form}
         return render(request, 'main/home.html', context)
 
 
-def Filter(request):
+def Filter(request, profile):
     # run algorithm to select a profile to display
+    matchedProfile = 'ALGO'
+
     form = SelectionForm()
     if request.method == 'POST':
         form = SelectionForm(request.POST)
         if form.is_valid():
             # run the results optimization algorithm
-            print(request.POST)
+            data = [matchedProfile, profile, form.cleaned_data['Match?']]
         return redirect(Filter)
+
     context = {'form': form}
     return render(request, 'main/filter.html', context)
