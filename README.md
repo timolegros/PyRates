@@ -1,5 +1,5 @@
 # PyRates
-A project created bY Timothee Legros, Sandipan Nath, Curtis Kennedy and Sashreek Magan for IvyHacks 2020.
+A project created by Timothee Legros, Sandipan Nath, Curtis Kennedy and Sashreek Magan for IvyHacks 2020.
 
 1. Monte Carlo
 2. Very simple front end
